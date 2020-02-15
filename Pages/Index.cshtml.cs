@@ -14,17 +14,11 @@ namespace BorodaikevychZodiac.Pages
 {
   public class IndexModel : PageModel
   {
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
-    {
-      _logger = logger;
-    }
-
     private DateTime? _birthDate;
 
     [BindProperty]
-    [DisplayFormat(NullDisplayText = "")]
+    [Required]
+    [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public string BirthDateString
     {
       set
@@ -50,6 +44,29 @@ namespace BorodaikevychZodiac.Pages
         }
 
         return date.ToString("dd-MM-yyyy");
+      }
+    }
+
+    public int Age
+    {
+      get
+      {
+        if (string.IsNullOrEmpty(BirthDateString)) return -1;
+        var today = DateTime.Now;
+        var age = today.Year - _birthDate.Value.Year;
+        if (_birthDate.Value.Date > today.AddYears(-age)) age--;
+        return age;
+      }
+    }
+
+    public bool IsBornToday
+    {
+      get
+      {
+        if (_birthDate == null) return false;
+        var date = _birthDate.Value.Date;
+        var today = DateTime.Today;
+        return date.Day == today.Day && date.Month == today.Month;
       }
     }
   }

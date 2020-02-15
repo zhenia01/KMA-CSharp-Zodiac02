@@ -11,7 +11,7 @@ $(() => {
         startDate: "-135y",
         weekStart: 1,
         onClose: true,
-        immediateUpdates: true
-        //showOnFocus: false
+        immediateUpdates: true,
+        keyboardNavigation: false
     });
 })
