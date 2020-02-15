@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Logging;
 
 namespace BorodaikevychZodiac.Pages
@@ -20,22 +21,36 @@ namespace BorodaikevychZodiac.Pages
       _logger = logger;
     }
 
+    private DateTime? _birthDate;
+
     [BindProperty]
-    public DateTime? BirthDate { get; private set; }
-
-    public IActionResult OnPost(string birthDate)
+    [DisplayFormat(NullDisplayText = "")]
+    public string BirthDateString
     {
-      DateTime.TryParseExact(birthDate, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-        DateTimeStyles.None, out var date);
+      set
+      {
+        DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+          DateTimeStyles.None, out var date);
 
-      BirthDate = date;
+        _birthDate = date;
+      }
 
-      return Page();
-    }
+      get
+      {
+        if (_birthDate == null)
+        {
+          return null;
+        }
 
-    public IActionResult DisplayResult()
-    {
-      return Partial("_BirthDayGrats");
+        var date = _birthDate.Value.Date;
+
+        if (date == DateTime.MinValue)
+        {
+          return "";
+        }
+
+        return date.ToString("dd-MM-yyyy");
+      }
     }
   }
 }
