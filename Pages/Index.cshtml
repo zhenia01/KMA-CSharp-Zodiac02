@@ -10,7 +10,7 @@
     <form asp-antiforgery="true" id="birthDateForm" method="post">
       <label for="birthDateInput" class="mt-4 mb-3">Type your birth date</label>
       <div class="datepicker date input-group p-0 shadow-sm">
-        <input asp-for="@Model.BirthDateString" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput">
+        <input asp-for="@Model.BirthDateInput" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
             <i class="fa fa-check-circle fa-2x"></i>
@@ -19,16 +19,16 @@
       </div>
     </form>
   </div>
-  <p>@Model.BirthDateString</p>
-  @if (Model.BirthDateString == "")
+  <p>@Model.BirthInfo.BirthDateString</p>
+  @if (Model.BirthInfo.BirthDateString == "")
   {
     <p>Error! Type real date in "DD-MM-YYYY" format</p>
   }
-  @if (@Model.Age != -1)
+  @if (Model.BirthInfo.Age != -1)
   {
-    <p>Your age: @Model.Age</p>
+    <p>Your age: @Model.BirthInfo.Age</p>
   }
-  @if (@Model.IsBornToday)
+  @if (Model.BirthInfo.IsBornToday)
   {
     <p>Happy Birthday!!&#x1F381;</p>
   }
