@@ -20,7 +20,7 @@ namespace BorodaikevychZodiac.Pages
       _logger = logger;
     }
 
-    [DataType(DataType.Date)]
+    [BindProperty]
     public DateTime? BirthDate { get; private set; }
 
     public IActionResult OnPost(string birthDate)
@@ -30,8 +30,12 @@ namespace BorodaikevychZodiac.Pages
 
       BirthDate = date;
 
-
       return Page();
+    }
+
+    public IActionResult DisplayResult()
+    {
+      return Partial("_BirthDayGrats");
     }
   }
 }

@@ -7,10 +7,10 @@
 <div class="text-center">
   <h1 class="display-1">Zodiac</h1>
   <div class="form-group mb-4">
-    <form id="birthDateForm" method="post">
+    <form asp-antiforgery="true" id="birthDateForm" method="post">
       <label for="birthDateInput" class="mt-4 mb-3">Type your birth date</label>
       <div class="datepicker date input-group p-0 shadow-sm">
-        <input name="birthDate" type="text" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput">
+        <input asp-for="BirthDate" type="text" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
             <i class="fa fa-check-circle fa-2x"></i>
@@ -23,11 +23,12 @@
   {
     @if (Model.BirthDate != DateTime.MinValue)
     {
-      <p>@Model.BirthDate</p>
+      <p>@Model.BirthDate.Value.Date.ToString("dd-MM-yyyy")</p>
+      
     }
     else
     {
-      <partial name="PartialViews/_DateError" model="null"/>
+       <partial name="PartialViews/_DateError" model="null"/>
     }
   }
 
