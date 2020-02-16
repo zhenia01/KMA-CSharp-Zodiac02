@@ -25,5 +25,8 @@ namespace BorodaikevychZodiac.Pages
     }
 
     public BirthInfo BirthInfo { get; } = new BirthInfo();
+
+    public (string name, string emoji) ChineseZodiacSign => ZodiacSigns.ChineseSign(BirthInfo.BirthDate ?? DateTime.MinValue);
+    public (string name, string emoji) WesternZodiacSign => ZodiacSigns.WesternSign(BirthInfo.BirthDate ?? DateTime.MinValue);
   }
 }
