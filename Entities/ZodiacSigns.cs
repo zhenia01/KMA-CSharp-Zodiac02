@@ -25,7 +25,7 @@ namespace BorodaikevychZodiac.Entities
       };
     }
 
-    public static (string name, string emojiHtmlCode) WesternSign(DateTime birth)
+    public static (string name, string emoji) WesternSign(DateTime birth)
     {
       if (birth == DateTime.MinValue) return ("", "");
       return birth.Month switch

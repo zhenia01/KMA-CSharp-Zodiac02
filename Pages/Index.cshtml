@@ -8,9 +8,9 @@
     <h1 class="display-1">Zodiac</h1>
     <div class="form-group mb-4">
       <form asp-antiforgery="true" id="birthDateForm" method="post">
-        <label for="birthDateInput" class="mt-4 mb-3">Type your birth date</label>
+        <label asp-for="@Model.BirthDateInput" class="mt-4 mb-3">Type your birth date</label>
         <div class="datepicker date input-group p-0 shadow-sm">
-          <input asp-for="@Model.BirthDateInput" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput">
+          <input asp-for="@Model.BirthDateInput" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
               <i class="fa fa-check-circle fa-2x"></i>
@@ -19,11 +19,11 @@
         </div>
       </form>
     </div>
-    @if (Model.BirthInfo.BirthDateString == "")
+    @if (Model.BirthInfo.BirthDate == default && !Model.IsFirstAttempt)
     {
       <p class="alert alert-warning">Error! Type real date in "DD-MM-YYYY" format</p>
     }
-    @if (!string.IsNullOrEmpty(Model.BirthInfo.BirthDateString))
+    @if (Model.BirthInfo.BirthDate != default)
     {
       <p class="alert alert-info">Your birth date: @Model.BirthInfo.BirthDateString</p>
     }

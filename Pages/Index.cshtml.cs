@@ -15,18 +15,23 @@ namespace BorodaikevychZodiac.Pages
 {
   public class IndexModel : PageModel
   {
+
     [BindProperty]
-    [Required]
-    [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public string BirthDateInput
     {
       get => BirthInfo.BirthDateString;
-      set => BirthInfo.BirthDateString = value;
+      set
+      {
+        BirthInfo.BirthDateString = value;
+        IsFirstAttempt = false;
+      }
     }
+
+    public bool IsFirstAttempt { get; private set; } = true;
 
     public BirthInfo BirthInfo { get; } = new BirthInfo();
 
-    public (string name, string emoji) ChineseZodiacSign => ZodiacSigns.ChineseSign(BirthInfo.BirthDate ?? DateTime.MinValue);
-    public (string name, string emoji) WesternZodiacSign => ZodiacSigns.WesternSign(BirthInfo.BirthDate ?? DateTime.MinValue);
+    public (string name, string emoji) ChineseZodiacSign => ZodiacSigns.ChineseSign(BirthInfo.BirthDate);
+    public (string name, string emoji) WesternZodiacSign => ZodiacSigns.WesternSign(BirthInfo.BirthDate);
   }
 }
