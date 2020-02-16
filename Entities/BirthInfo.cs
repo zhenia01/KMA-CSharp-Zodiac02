@@ -8,8 +8,7 @@ namespace BorodaikevychZodiac.Entities
 {
   public class BirthInfo
   {
-    private DateTime? _birthDate;
-
+    public DateTime? BirthDate { get; private set; }
 
     public string BirthDateString
     {
@@ -18,17 +17,17 @@ namespace BorodaikevychZodiac.Entities
         DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
           DateTimeStyles.None, out var date);
 
-        _birthDate = date;
+        BirthDate = date;
       }
 
       get
       {
-        if (_birthDate == null)
+        if (BirthDate == null)
         {
           return null;
         }
 
-        var date = _birthDate.Value.Date;
+        var date = BirthDate.Value.Date;
 
         if (date == DateTime.MinValue)
         {
@@ -43,10 +42,10 @@ namespace BorodaikevychZodiac.Entities
     {
       get
       {
-        if (string.IsNullOrEmpty(BirthDateString) || _birthDate == null) return -1;
+        if (string.IsNullOrEmpty(BirthDateString) || BirthDate == null) return -1;
         var today = DateTime.Now;
-        var age = today.Year - _birthDate.Value.Year;
-        if (_birthDate.Value.Date > today.AddYears(-age)) age--;
+        var age = today.Year - BirthDate.Value.Year;
+        if (BirthDate.Value.Date > today.AddYears(-age)) age--;
         return age;
       }
     }
@@ -55,8 +54,8 @@ namespace BorodaikevychZodiac.Entities
     {
       get
       {
-        if (_birthDate == null) return false;
-        var date = _birthDate.Value.Date;
+        if (BirthDate == null) return false;
+        var date = BirthDate.Value.Date;
         var today = DateTime.Today;
         return date.Day == today.Day && date.Month == today.Month;
       }
