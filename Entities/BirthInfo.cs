@@ -8,21 +8,7 @@ namespace BorodaikevychZodiac.Entities
 {
   public class BirthInfo
   {
-    public DateTime BirthDate { get; private set; }
-
-    public string BirthDateString
-    {
-      set
-      {
-        DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-          DateTimeStyles.None, out var date);
-
-        
-        BirthDate = date <= DateTime.Today ? date : default;
-      }
-
-      get => BirthDate == DateTime.MinValue ? "" : BirthDate.ToString("dd-MM-yyyy");
-    }
+    public DateTime BirthDate { get; set; }
 
     public int Age
     {

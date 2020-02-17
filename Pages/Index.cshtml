@@ -1,16 +1,16 @@
 ﻿@page
 @model IndexModel
 @{
-  ViewData["Title"] = "Home page";
+  ViewData["Title"] = "Zodiac";
 }
 
   <div class="text-center">
     <h1 class="display-1">Zodiac</h1>
     <div class="form-group mb-4">
       <form asp-antiforgery="true" id="birthDateForm" method="post">
-        <label asp-for="@Model.BirthDateInput" class="mt-4 mb-3">Type your birth date</label>
+        <label asp-for="@Model.BirthDateString" class="mt-4 mb-3">Type your birth date</label>
         <div class="datepicker date input-group p-0 shadow-sm">
-          <input asp-for="@Model.BirthDateInput" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
+          <input asp-for="@Model.BirthDateString" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
               <i class="fa fa-check-circle fa-2x"></i>
@@ -25,7 +25,7 @@
     }
     @if (Model.BirthInfo.BirthDate != default)
     {
-      <p class="alert alert-info">Your birth date: @Model.BirthInfo.BirthDateString</p>
+      <p class="alert alert-info">Your birth date: @Model.BirthDateString</p>
     }
     @if (Model.BirthInfo.Age != -1)
     {
@@ -35,11 +35,11 @@
     {
       <p class="alert alert-info">Happy Birthday!!&#x1F381</p>
     }
-    @if (@Model.ChineseZodiacSign != ("", ""))
+    @if (Model.ChineseZodiacSign != ("", ""))
     {
       <p class="alert alert-info">Your chinese sign: @Model.ChineseZodiacSign.name @Model.ChineseZodiacSign.emoji</p>
     }
-    @if (@Model.WesternZodiacSign != ("", ""))
+    @if (Model.WesternZodiacSign != ("", ""))
     {
       <p class="alert alert-info">Your western sign: @Model.WesternZodiacSign.name @Model.WesternZodiacSign.emoji</p>
     }

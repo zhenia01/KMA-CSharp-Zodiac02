@@ -15,16 +15,21 @@ namespace BorodaikevychZodiac.Pages
 {
   public class IndexModel : PageModel
   {
-
     [BindProperty]
-    public string BirthDateInput
+    public string BirthDateString
     {
-      get => BirthInfo.BirthDateString;
       set
       {
-        BirthInfo.BirthDateString = value;
+        DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+          DateTimeStyles.None, out var date);
+
+
+        BirthInfo.BirthDate = date <= DateTime.Today ? date : default;
+
         IsFirstAttempt = false;
       }
+
+      get => BirthInfo.BirthDate == DateTime.MinValue ? "" : BirthInfo.BirthDate.ToString("dd-MM-yyyy");
     }
 
     public bool IsFirstAttempt { get; private set; } = true;
