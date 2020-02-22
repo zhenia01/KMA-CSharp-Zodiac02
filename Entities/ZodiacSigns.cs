@@ -6,28 +6,28 @@ namespace BorodaikevychZodiac.Entities
   {
     public static (string name, string emoji) ChineseSign(DateTime birth)
     {
-      if (birth == DateTime.MinValue) return ("", "");
+      if (birth == DateTime.MinValue) return default;
       return ((birth.Year - 4) % 12) switch
       {
-        0 => ("Rat","🐀"),
-        1 => ("Ox", "🐂"),  
+        0 => ("Rat", "🐀"),
+        1 => ("Ox", "🐂"),
         2 => ("Tiger", "🐅"),
         3 => ("Rabbit", "🐇"),
-        4 => ("Dragon","🐉"),
+        4 => ("Dragon", "🐉"),
         5 => ("Snake", "🐍"),
         6 => ("Horse", "🐎"),
-        7 => ("Goat","🐐"),
+        7 => ("Goat", "🐐"),
         8 => ("Monkey", "🐒"),
         9 => ("Rooster", "🐓"),
         10 => ("Dog", "🐕"),
         11 => ("Pig", "🐖"),
-        _ => ("", "")
+        _ => default
       };
     }
 
     public static (string name, string emoji) WesternSign(DateTime birth)
     {
-      if (birth == DateTime.MinValue) return ("", "");
+      if (birth == DateTime.MinValue) return default;
       return birth.Month switch
       {
         1 => (birth.Day <= 20 ? ("Capricorn", "♑") : ("Aquarius", "♒")),
@@ -42,7 +42,7 @@ namespace BorodaikevychZodiac.Entities
         10 => (birth.Day <= 23 ? ("Libra", "♎") : ("Scorpius", "♏")),
         11 => (birth.Day <= 22 ? ("Scorpius", "♏") : ("Sagittarius", "♐")),
         12 => (birth.Day <= 21 ? ("Sagittarius", "♐") : ("Capricorn", "♑")),
-        _ => ("", "") 
+        _ => default
       };
     }
 
