@@ -22,7 +22,8 @@ namespace BorodaikevychZodiac.Models.User
         WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
       }
 
-      get => _birthInfo != default ? _birthInfo.BirthDate.ToString("dd-MM-yyyy") : "";
+      get => _birthInfo.BirthDate != default ?
+        _birthInfo.BirthDate.ToString("dd-MM-yyyy") : default;
     }
 
     public int Age => _birthInfo.Age;

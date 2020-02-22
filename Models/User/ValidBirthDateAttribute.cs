@@ -10,7 +10,7 @@ namespace BorodaikevychZodiac.Models.User
     {
       if (value is UserModel user)
       {
-        return user.BirthDate != "";
+        return user.BirthDate != default;
       }
       return false;
     }
