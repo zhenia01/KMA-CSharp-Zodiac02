@@ -4,45 +4,47 @@
   ViewData["Title"] = "Zodiac";
 }
 
-  <div class="text-center">
-    <h1 class="display-1">Zodiac</h1>
-    <div class="form-group mb-4">
-      <form asp-antiforgery="true" id="birthDateForm" method="post">
-        <label asp-for="@Model.BirthDateString" class="mt-4 mb-3">Type your birth date</label>
-        <div class="datepicker date input-group p-0 shadow-sm">
-          <input asp-for="@Model.BirthDateString" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
-              <i class="fa fa-check-circle fa-2x"></i>
-            </button>
-          </div>
+<div class="text-center">
+  <h1 class="display-1">Zodiac</h1>
+  <div class="form-group mb-4">
+    <form asp-antiforgery="true" id="birthDateForm" method="post">
+      <label asp-for="@Model.User.BirthDate" class="mt-4 mb-3">Type your birth date</label>
+      <div class="datepicker date input-group p-0 shadow-sm">
+        <input asp-for="@Model.User.BirthDate" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
+            <i class="fa fa-check-circle fa-2x"></i>
+          </button>
         </div>
-      </form>
-    </div>
-    @if (Model.BirthInfo.BirthDate == default && !Model.IsFirstAttempt)
-    {
-      <p class="alert alert-warning">Error! Type real date in "DD-MM-YYYY" format</p>
-    }
-    @if (Model.BirthInfo.BirthDate != default)
-    {
-      <p class="alert alert-info">Your birth date: @Model.BirthDateString</p>
-    }
-    @if (Model.BirthInfo.Age != -1)
-    {
-      <p class="alert alert-info">Your age: @Model.BirthInfo.Age</p>
-    }
-    @if (Model.BirthInfo.IsBornToday)
-    {
-      <p class="alert alert-info">Happy Birthday!!&#x1F381</p>
-    }
-    @if (Model.ChineseZodiacSign != ("", ""))
-    {
-      <p class="alert alert-info">Your chinese sign: @Model.ChineseZodiacSign.name @Model.ChineseZodiacSign.emoji</p>
-    }
-    @if (Model.WesternZodiacSign != ("", ""))
-    {
-      <p class="alert alert-info">Your western sign: @Model.WesternZodiacSign.name @Model.WesternZodiacSign.emoji</p>
-    }
-
-
+      </div>
+    </form>
   </div>
+  @if (!ModelState.IsValid)
+  {
+    <p class="alert alert-warning">Error! Type real date in "DD-MM-YYYY" format</p>
+  }
+  else
+  {
+    @if (Model.User.BirthDate != default)
+    {
+      <p class="alert alert-info">Your birth date: @Model.User.BirthDate</p>
+    }
+    @if (Model.User.Age != -1)
+    {
+      <p class="alert alert-info">Your age: @Model.User.Age</p>
+    }
+    @if (Model.User.IsBornToday)
+    {
+      <p class="alert alert-info">Happy Birthday!!! 🎁🎉</p>
+    }
+    @if (Model.User.ChineseZodiacSign != default)
+    {
+      <p class="alert alert-info">Your chinese sign: @Model.User.ChineseZodiacSign.name @Model.User.ChineseZodiacSign.emoji</p>
+    }
+    @if (Model.User.WesternZodiacSign != default)
+    {
+      <p class="alert alert-info">Your western sign: @Model.User.WesternZodiacSign.name @Model.User.WesternZodiacSign.emoji</p>
+    }
+  }
+
+</div>
