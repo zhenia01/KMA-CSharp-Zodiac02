@@ -1,34 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BorodaikevychZodiac.Entities
 {
   public class BirthInfo
   {
-    public DateTime BirthDate { get; set; }
+    private DateTime _birthDate;
 
-    public int Age
+    public DateTime BirthDate
     {
-      get
+      get => _birthDate;
+      set
       {
-        if (BirthDate == default) return -1;
         var today = DateTime.Now;
-        var age = today.Year - BirthDate.Year;
+        var age = today.Year - value.Year;
         if (BirthDate > today.AddYears(-age)) age--;
-        return age;
+
+        if (age >= 0 && age <= 135)
+        {
+          _birthDate = value;
+          IsBornToday = _birthDate.Day == today.Day && _birthDate.Month == today.Month;
+          Age = age;
+        }
       }
     }
 
-    public bool IsBornToday
-    {
-      get
-      {
-        var today = DateTime.Today;
-        return BirthDate.Day == today.Day && BirthDate.Month == today.Month;
-      }
-    }
+    public int Age { get; private set; } = -1;
+
+    public bool IsBornToday { get; private set; }
   }
 }
