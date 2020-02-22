@@ -25,24 +25,15 @@
   }
   else
   {
-    @if (Model.User.BirthDate != default)
+    if (Model.IsTried)
     {
       <p class="alert alert-info">Your birth date: @Model.User.BirthDate</p>
-    }
-    @if (Model.User.Age != -1)
-    {
       <p class="alert alert-info">Your age: @Model.User.Age</p>
-    }
-    @if (Model.User.IsBornToday)
-    {
-      <p class="alert alert-info">Happy Birthday!!! 🎁🎉</p>
-    }
-    @if (Model.User.ChineseZodiacSign != default)
-    {
+      if (Model.User.IsBornToday)
+      {
+        <p class="alert alert-info">Happy Birthday!!! 🎁🎉</p>
+      }
       <p class="alert alert-info">Your chinese sign: @Model.User.ChineseZodiacSign.name @Model.User.ChineseZodiacSign.emoji</p>
-    }
-    @if (Model.User.WesternZodiacSign != default)
-    {
       <p class="alert alert-info">Your western sign: @Model.User.WesternZodiacSign.name @Model.User.WesternZodiacSign.emoji</p>
     }
   }

@@ -10,6 +10,13 @@ namespace BorodaikevychZodiac.Pages
     [BindProperty]
     [Required]
     [ValidBirthDate]
-    public new UserModel User { get; set; }
+    public new UserModel User { get; set; } = new UserModel();
+
+    public bool IsTried { get; private set; }
+
+    public void OnPost()
+    {
+      IsTried = true;
+    }
   }
 }
