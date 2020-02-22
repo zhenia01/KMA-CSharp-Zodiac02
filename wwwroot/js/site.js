@@ -12,6 +12,7 @@ $(() => {
         weekStart: 1,
         onClose: true,
         immediateUpdates: true,
-        keyboardNavigation: false
+        keyboardNavigation: false,
+        todayBtn: "linked"
     });
 })
