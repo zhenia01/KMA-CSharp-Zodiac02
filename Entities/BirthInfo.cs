@@ -13,7 +13,7 @@ namespace BorodaikevychZodiac.Entities
       {
         var today = DateTime.Now;
         var age = today.Year - value.Year;
-        if (BirthDate > today.AddYears(-age)) age--;
+        if (value > today.AddYears(-age)) age--;
 
         if (age >= 0 && age <= 135)
         {

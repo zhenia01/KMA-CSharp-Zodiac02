@@ -8,6 +8,8 @@ namespace BorodaikevychZodiac.Models.User
   {
     private readonly BirthInfo _birthInfo = new BirthInfo();
 
+    private string _birthDate;
+
     public string BirthDate
     {
       set
@@ -16,14 +18,13 @@ namespace BorodaikevychZodiac.Models.User
           DateTimeStyles.None, out var birthDate))
         {
           _birthInfo.BirthDate = birthDate;
+          _birthDate = _birthInfo.BirthDate.ToString("dd-MM-yyyy");
+          ChineseZodiacSign = ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
+          WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
         }
-
-        ChineseZodiacSign = ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
-        WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
       }
 
-      get => _birthInfo.BirthDate != default ?
-        _birthInfo.BirthDate.ToString("dd-MM-yyyy") : default;
+      get => _birthDate;
     }
 
     public int Age => _birthInfo.Age;
