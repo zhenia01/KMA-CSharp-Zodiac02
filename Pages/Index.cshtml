@@ -4,18 +4,30 @@
   ViewData["Title"] = "Zodiac";
 }
 
-<div class="text-center">
-  <h1 class="display-1">Zodiac</h1>
+<div>
+  <h1 class="text-center display-1">Person</h1>
   <div class="form-group mb-4">
     <form asp-antiforgery="true" id="birthDateForm" method="post">
-      <label asp-for="@Model.User.BirthDate" class="mt-4 mb-3">Type your birth date</label>
-      <div class="datepicker date input-group p-0 shadow-sm">
-        <input asp-for="@Model.User.BirthDate" placeholder="dd-mm-yyyy" class="form-control py-4 px-4" id="birthDateInput" required>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="submit" form="birthDateForm">
-            <i class="fa fa-check-circle fa-2x"></i>
-          </button>
-        </div>
+      <div class="form-group">
+        <label asp-for="@Model.BirthDate">Birth Date</label>
+        <input asp-for="@Model.BirthDate" placeholder="dd-mm-yyyy" class="datepicker date form-control py-4 px-4" required>
+      </div>
+      <div class="form-group">
+        <label asp-for="@Model.FirstName">First Name</label>
+        <input asp-for="@Model.FirstName" placeholder="First name" class="form-control py-4 px-4 mb-2" required>
+      </div>
+      <div class="form-group">
+        <label asp-for="@Model.LastName">Last Name</label>
+        <input asp-for="@Model.LastName" placeholder="Last Name" class="form-control py-4 px-4 mb-2" required>
+      </div>
+      <div class="form-group">
+        <label asp-for="@Model.Email">Email address</label>
+        <input asp-for="@Model.Email" placeholder="abc@@company.com" class="form-control py-4 px-4 mb-2" required>
+      </div>
+      <div class="input-group-append">
+        <button class="btn btn-block btn-lg btn-outline-secondary align-items-center" type="submit" form="birthDateForm">
+          Process
+        </button>
       </div>
     </form>
   </div>
@@ -27,14 +39,19 @@
   {
     if (Model.IsTried)
     {
-      <p class="alert alert-info">Your birth date: @Model.User.BirthDate</p>
-      <p class="alert alert-info">Your age: @Model.User.Age</p>
-      if (Model.User.IsBornToday)
-      {
-        <p class="alert alert-info">Happy Birthday!!! 🎁🎉</p>
-      }
-      <p class="alert alert-info">Your chinese sign: @Model.User.ChineseZodiacSign.name @Model.User.ChineseZodiacSign.emoji</p>
-      <p class="alert alert-info">Your western sign: @Model.User.WesternZodiacSign.name @Model.User.WesternZodiacSign.emoji</p>
+      <div class="text-center">
+        <p class="alert alert-info">Your birth date: @Model.BirthDate</p>
+        <p class="alert alert-info">@(Model.IsAdult ? "You are an adult" : "You are not an adult")</p>
+        @if (Model.IsBornToday)
+        {
+          <p class="alert alert-success">Happy Birthday!!! 🎁🎉</p>
+        }
+        <p class="alert alert-info">Your first name: @Model.FirstName</p>
+        <p class="alert alert-info">Your last name: @Model.LastName</p>
+        <p class="alert alert-info">Your email: @Model.Email</p>
+        <p class="alert alert-info">Your chinese sign: @Model.ChineseZodiacSign.name @Model.ChineseZodiacSign.emoji</p>
+        <p class="alert alert-info">Your western sign: @Model.WesternZodiacSign.name @Model.WesternZodiacSign.emoji</p>
+      </div>
     }
   }
 
