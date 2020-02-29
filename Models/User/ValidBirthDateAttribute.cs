@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace BorodaikevychZodiac.Models.User
 {
@@ -8,9 +10,10 @@ namespace BorodaikevychZodiac.Models.User
 
     public override bool IsValid(object value)
     {
-      if (value is UserModel user)
+      if (value is string date)
       {
-        return user.BirthDate != default;
+        return DateTime.TryParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+          DateTimeStyles.None, out _);
       }
       return false;
     }
