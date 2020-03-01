@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using BorodaikevychZodiac.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -50,9 +51,11 @@ namespace BorodaikevychZodiac.Pages
 
     public bool IsTried { get; private set; }
 
-    public void OnPost()
+    public async Task<IActionResult> OnPost()
     {
       IsTried = true;
+      await Task.Delay(100);
+      return Page();
     }
   }
 }
