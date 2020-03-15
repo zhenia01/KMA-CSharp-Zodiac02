@@ -4,7 +4,7 @@ using BorodaikevychZodiac.Entities;
 
 namespace BorodaikevychZodiac.Models.User
 {
-  public class UserModel
+  internal class UserModel
   {
     private readonly Person _person = new Person(default, default, default,default);
 

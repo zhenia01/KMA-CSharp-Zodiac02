@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace BorodaikevychZodiac.Models.User
 {
-  public class ValidBirthDateAttribute : ValidationAttribute
+  internal class ValidBirthDateAttribute : ValidationAttribute
   {
     public string GetErrorMessage() => "Birth Date is not valid";
 
