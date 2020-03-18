@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace BorodaikevychZodiac.Entities
 {
-  internal class BirthInfo
+  public class BirthInfo
   {
     private DateTime _birthDate;
 
     public DateTime BirthDate
     {
       get => _birthDate;
-      set { Task.Run(() => CalculateBirthInfo(value)); }
-    }
-
-    private async Task CalculateBirthInfo(DateTime value)
-    {
-      await Task.Run(() =>
+      set
       {
         var today = DateTime.Now;
         var age = today.Year - value.Year;
@@ -27,7 +21,7 @@ namespace BorodaikevychZodiac.Entities
           IsBornToday = _birthDate.Day == today.Day && _birthDate.Month == today.Month;
           Age = age;
         }
-      });
+      }
     }
 
     public int Age { get; private set; } = -1;

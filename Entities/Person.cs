@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace BorodaikevychZodiac.Entities
 {
-  internal class Person
+  public class Person
   {
     public Person(string firstName, string lastName, string email, DateTime birthDate = default)
     {
@@ -29,25 +28,9 @@ namespace BorodaikevychZodiac.Entities
       {
         _birthInfo.BirthDate = value;
         IsAdult = _birthInfo.Age >= 18;
-        Task.Run(CalculateZodiacSigns);
+        ChineseZodiacSign = ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
+        WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
       }
-    }
-
-    private async Task CalculateZodiacSigns()
-    {
-      var chineseTask = CalculateChineseSignAsync();
-      var westernTask = CalculateWesternSignAsync(); 
-      await Task.WhenAll(chineseTask, westernTask);
-    }
-
-    private async Task CalculateChineseSignAsync()
-    {
-      ChineseZodiacSign = await ZodiacSigns.ChineseSignAsync(_birthInfo.BirthDate);
-    } 
-    
-    private async Task CalculateWesternSignAsync()
-    {
-      WesternZodiacSign = await ZodiacSigns.WesternSignAsync(_birthInfo.BirthDate);
     }
 
     public bool IsAdult { get; private set; }
