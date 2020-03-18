@@ -7,46 +7,10 @@ namespace BorodaikevychZodiac.Pages
 {
   public class IndexModel : PageModel
   {
-    private readonly UserModel _user = new UserModel();
-
-    [Required]
     [BindProperty]
+    [Required]
     [ValidBirthDate]
-    public string BirthDate
-    {
-      get => _user.BirthDate;
-      set => _user.BirthDate = value;
-    }
-
-    [Required]
-    [BindProperty]
-    public string FirstName
-    {
-      get => _user.FirstName;
-      set => _user.FirstName = value;
-    }
-
-    [Required]
-    [BindProperty]
-    public string LastName
-    {
-      get => _user.LastName;
-      set => _user.LastName = value;
-    }
-
-    [Required]
-    [BindProperty]
-    [DataType(DataType.EmailAddress)]
-    public string Email
-    {
-      get => _user.Email;
-      set => _user.Email = value;
-    }
-
-    public bool IsAdult => _user.IsAdult;
-    public bool IsBornToday => _user.IsBornToday;
-    public (string name, string emoji) ChineseZodiacSign => _user.ChineseZodiacSign;
-    public (string name, string emoji) WesternZodiacSign => _user.WesternZodiacSign;
+    public new UserModel User { get; set; } = new UserModel();
 
     public bool IsTried { get; private set; }
 
