@@ -6,7 +6,7 @@ namespace BorodaikevychZodiac.Models.User
 {
   internal class UserModel
   {
-    private readonly BirthInfo _birthInfo = new BirthInfo();
+    private readonly Person _person = new Person(default, default, default,default);
 
     private string _birthDate;
 
@@ -17,21 +17,36 @@ namespace BorodaikevychZodiac.Models.User
         if (DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
           DateTimeStyles.None, out var birthDate))
         {
-          _birthInfo.BirthDate = birthDate;
-          _birthDate = _birthInfo.BirthDate.ToString("dd-MM-yyyy");
-          ChineseZodiacSign = ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
-          WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
+          _birthDate = value;   
+          _person.BirthDate = birthDate;
         }
       }
 
       get => _birthDate;
     }
 
-    public int Age => _birthInfo.Age;
+    public string FirstName
+    {
+      get => _person.FirstName;
+      set => _person.FirstName = value;
+    }
+    
+    public string LastName
+    {
+      get => _person.LastName;
+      set => _person.LastName = value;
+    }    
+    
+    public string Email
+    {
+      get => _person.Email;
+      set => _person.Email = value;
+    }
 
-    public bool IsBornToday => _birthInfo.IsBornToday;
+    public bool IsBornToday => _person.IsBornToday;
+    public bool IsAdult => _person.IsAdult;
 
-    public (string name, string emoji) ChineseZodiacSign { get; private set; }
-    public (string name, string emoji) WesternZodiacSign { get; private set; }
+    public (string name, string emoji) ChineseZodiacSign => _person.ChineseZodiacSign;
+    public (string name, string emoji) WesternZodiacSign => _person.WesternZodiacSign;
   }
 }
