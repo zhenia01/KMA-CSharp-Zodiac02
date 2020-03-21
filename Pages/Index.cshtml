@@ -5,6 +5,7 @@
 }
 
 <div>
+
   <h1 class="text-center display-1">Person</h1>
   <div class="form-group mb-4">
     <form asp-antiforgery="true" id="birthDateForm" method="post">
@@ -33,11 +34,24 @@
   </div>
   @if (!ModelState.IsValid)
   {
-    <p class="alert alert-warning">Error! Type real date in "DD-MM-YYYY" format</p>
+    <div class="text-center">
+      @if (ModelState.ContainsKey("Invalid birth date format"))
+      {
+        <p class="alert alert-warning">Error! Type date in "DD-MM-YYYY" format</p>
+      }
+      @if (ModelState.ContainsKey("Early birth date") || ModelState.ContainsKey("Future birth date"))
+      {
+        <p class="alert alert-warning">Error! Type real date</p>
+      }
+      @if (ModelState.ContainsKey("Email"))
+      {
+        <p class="alert alert-warning">Error! Invalid email format</p>
+      }
+    </div>
   }
   else
   {
-    if (Model.IsTried)
+    if (Model.Tried)
     {
       <div class="text-center">
         <p class="alert alert-info">Your birth date: @Model.BirthDate</p>
