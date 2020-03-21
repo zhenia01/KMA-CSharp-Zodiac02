@@ -1,37 +1,49 @@
 ﻿using System;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using BorodaikevychZodiac.Exceptions;
 
 namespace BorodaikevychZodiac.Entities
 {
   public class Person
   {
-    public Person(string firstName, string lastName, string email, DateTime birthDate = default)
-    {
-      FirstName = firstName;
-      LastName = lastName;
-      Email = email;
-      BirthDate = birthDate;
-    }
-
-    public Person(string firstName, string lastName, DateTime birthDate) : this(firstName, lastName, "", birthDate)
+    public Person()
     {
     }
 
     public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    private readonly BirthInfo _birthInfo = new BirthInfo();
+    public string LastName { get; set; } 
 
-    public DateTime BirthDate
+    private string _email;
+    public string Email
     {
-      get => _birthInfo.BirthDate;
+      get => _email;
       set
       {
-        _birthInfo.BirthDate = value;
-        IsAdult = _birthInfo.Age >= 18;
-        ChineseZodiacSign = ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
-        WesternZodiacSign = ZodiacSigns.WesternSign(_birthInfo.BirthDate);
+        try
+        {
+          var email = new MailAddress(value);
+          _email = value;
+        }
+        catch (FormatException)
+        {
+          throw new InvalidEmailFormatException();
+        }
       }
     }
+
+    private readonly BirthInfo _birthInfo = new BirthInfo();
+
+    public DateTime BirthDate => _birthInfo.BirthDate;
+
+    public async Task SetBirthDateAsync(DateTime birthDate)
+      {
+        await _birthInfo.SetBirthDateAsync(birthDate);
+        ChineseZodiacSign = await ZodiacSigns.ChineseSign(_birthInfo.BirthDate);
+        WesternZodiacSign = await ZodiacSigns.WesternSign(_birthInfo.BirthDate);
+        IsAdult = _birthInfo.Age >= 18;
+      }
+    
 
     public bool IsAdult { get; private set; }
     public (string name, string emoji) ChineseZodiacSign { get; private set; }

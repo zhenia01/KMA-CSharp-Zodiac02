@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using BorodaikevychZodiac.Exceptions;
 
 namespace BorodaikevychZodiac.Entities
 {
@@ -6,22 +8,30 @@ namespace BorodaikevychZodiac.Entities
   {
     private DateTime _birthDate;
 
-    public DateTime BirthDate
-    {
-      get => _birthDate;
-      set
-      {
-        var today = DateTime.Now;
-        var age = today.Year - value.Year;
-        if (value > today.AddYears(-age)) age--;
+    public DateTime BirthDate => _birthDate;
 
-        if (age >= 0 && age <= 135)
-        {
-          _birthDate = value;
-          IsBornToday = _birthDate.Day == today.Day && _birthDate.Month == today.Month;
-          Age = age;
-        }
-      }
+    public async Task SetBirthDateAsync(DateTime birthDate)
+    {
+      var today = DateTime.Now;
+      int age = await CalcAge(birthDate, today);
+
+      if (age < 0) throw new TooEarlyBirthDateException();
+      if (age > 135) throw new FutureBirthDateException();
+
+      _birthDate = birthDate;
+      IsBornToday = _birthDate.Day == today.Day && _birthDate.Month == today.Month;
+      Age = age;
+    }
+
+
+    private static Task<int> CalcAge(DateTime birthDate, DateTime today)
+    {
+      return Task.Run(() =>
+      {
+        var age = today.Year - birthDate.Year;
+        if (birthDate > today.AddYears(-age)) return --age;
+        return age;
+      });
     }
 
     public int Age { get; private set; } = -1;

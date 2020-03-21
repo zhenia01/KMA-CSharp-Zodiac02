@@ -1,28 +1,39 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using BorodaikevychZodiac.Entities;
+using BorodaikevychZodiac.Exceptions;
 
 namespace BorodaikevychZodiac.Models.User
 {
   internal class UserModel
   {
-    private readonly Person _person = new Person(default, default, default,default);
+    private readonly Person _person = new Person();
 
-    private string _birthDate;
+    public string BirthDate { get; private set; }
 
-    public string BirthDate
+    public async Task SetBirthDateStringAsync(string birthDateString)
     {
-      set
+      var birthDate = await ParseBirthDateAsync(birthDateString);
+      if (birthDate != default)
       {
-        if (DateTime.TryParseExact(value, "dd-MM-yyyy", CultureInfo.InvariantCulture,
-          DateTimeStyles.None, out var birthDate))
-        {
-          _birthDate = value;   
-          _person.BirthDate = birthDate;
-        }
+        BirthDate = birthDateString;
+        await _person.SetBirthDateAsync(birthDate);
       }
+      else
+      {
+        throw new InvalidDateFormatException();
+      }
+    }
 
-      get => _birthDate;
+    private static Task<DateTime> ParseBirthDateAsync(string birthDate)
+    {
+      return Task.Run(() =>
+      {
+        DateTime.TryParseExact(birthDate, "dd-MM-yyyy", CultureInfo.InvariantCulture,
+          DateTimeStyles.None, out var result);
+        return result;
+      });
     }
 
     public string FirstName
@@ -30,13 +41,13 @@ namespace BorodaikevychZodiac.Models.User
       get => _person.FirstName;
       set => _person.FirstName = value;
     }
-    
+
     public string LastName
     {
       get => _person.LastName;
       set => _person.LastName = value;
-    }    
-    
+    }
+
     public string Email
     {
       get => _person.Email;

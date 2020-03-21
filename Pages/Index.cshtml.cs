@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using BorodaikevychZodiac.Exceptions;
 using BorodaikevychZodiac.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,14 +11,7 @@ namespace BorodaikevychZodiac.Pages
   {
     private readonly UserModel _user = new UserModel();
 
-    [Required]
-    [BindProperty]
-    [ValidBirthDate]
-    public string BirthDate
-    {
-      get => _user.BirthDate;
-      set => _user.BirthDate = value;
-    }
+    public string BirthDate => _user.BirthDate;
 
     [Required]
     [BindProperty]
@@ -34,25 +29,44 @@ namespace BorodaikevychZodiac.Pages
       set => _user.LastName = value;
     }
 
-    [Required]
-    [BindProperty]
-    [DataType(DataType.EmailAddress)]
-    public string Email
-    {
-      get => _user.Email;
-      set => _user.Email = value;
-    }
+    public string Email => _user.Email;
 
     public bool IsAdult => _user.IsAdult;
     public bool IsBornToday => _user.IsBornToday;
     public (string name, string emoji) ChineseZodiacSign => _user.ChineseZodiacSign;
     public (string name, string emoji) WesternZodiacSign => _user.WesternZodiacSign;
 
-    public bool IsTried { get; private set; }
+    public bool Tried { get; private set; }
 
-    public void OnPost()
+    public async Task OnPost(string birthDate, string email)
     {
-      IsTried = true;
+      Tried = true;
+
+      try
+      {
+        await _user.SetBirthDateStringAsync(birthDate);
+      }
+      catch (TooEarlyBirthDateException e)
+      {
+        ModelState.AddModelError("Early birth date", e.Message);
+      }
+      catch (FutureBirthDateException e)
+      {
+        ModelState.AddModelError("Future birth date", e.Message);
+      }
+      catch (InvalidDateFormatException e)
+      {
+        ModelState.AddModelError("Invalid birth date format", e.Message);
+      }
+
+      try
+      {
+        _user.Email = email;
+      }
+      catch (InvalidEmailFormatException e)
+      {
+        ModelState.AddModelError("Email", e.Message);
+      }
     }
   }
 }
